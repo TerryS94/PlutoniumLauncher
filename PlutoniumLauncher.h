@@ -7,5 +7,7 @@
 #include <cstdlib>
 #include <filesystem>
 #include <fstream>
+#include <Uxtheme.h>
+#pragma comment(lib, "UxTheme.lib")
 
 #include <nlohmann/json.hpp>
