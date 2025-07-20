@@ -1,14 +1,3 @@
-#include "framework.h"
-#include <shlobj.h>
-#include <shellapi.h>
-#include <string>
-#include <cstdlib>
-#include <memory>
-#include <filesystem>
-#include <fstream>
-
-#include <nlohmann/json.hpp>
-
 #include "PlutoniumLauncher.h"
 
 struct Vec2
@@ -34,10 +23,11 @@ bool isRunning = true;
 Vec2 windowPosition = { 100.0f, 100.0f };
 std::string plutoniumPath = GetLocalAppDataPath() + "\\Plutonium";
 const std::string BOOTSTRAPPER = plutoniumPath + "\\bin\\plutonium-bootstrapper-win32.exe";
-std::string WAW_FOLDER = "";
-std::string BO1_FOLDER = "";
-std::string BO2_FOLDER = "";
-std::string MW3_FOLDER = "";
+
+std::string WAW_FOLDER = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty World at War";
+std::string BO1_FOLDER = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty Black Ops";
+std::string BO2_FOLDER = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty Black Ops II";
+std::string MW3_FOLDER = "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Call of Duty Modern Warfare 3";
 
 std::string USERNAME = "";//the username to use on launch
 std::string LAUNCH_TARGET_PROCESS = "";//can be iw5mp, iw5sp, t6mp, t6zm, t5mp, t5sp, t4mp, t4sp
@@ -466,6 +456,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     default:
         return DefWindowProcA(hWnd, message, wParam, lParam);
     }
+    return DefWindowProcA(hWnd, message, wParam, lParam);
 }
 int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
 {
@@ -479,7 +470,7 @@ int WINAPI WinMain(HINSTANCE hInst, HINSTANCE, LPSTR, int nCmdShow)
     loadConfig();
     HWND hwnd = CreateWindowA(wc.lpszClassName, "Plutonium Launcher",
         WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU,
-        windowPosition.x, windowPosition.y, 660, 230,
+        static_cast<int>(windowPosition.x), static_cast<int>(windowPosition.y), 660, 230,
         nullptr, nullptr, hInst, nullptr);
     ShowWindow(hwnd, nCmdShow);
     UpdateWindow(hwnd);
