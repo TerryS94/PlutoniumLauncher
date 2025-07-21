@@ -401,11 +401,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         return (LRESULT)hbrControlBackground;
     }
     case WM_MOVE:
-        windowPosition = Vec2((int)(short)LOWORD(lParam), (int)(short)HIWORD(lParam));
+    {
+        RECT wr;
+        if (GetWindowRect(hWnd, &wr))
+            windowPosition = Vec2((float)wr.left, (float)wr.top);
         break;
+    }
     case WM_MOVING:
     {
-        RECT* r = (RECT*)lParam;
+        RECT* r = reinterpret_cast<RECT*>(lParam);
         windowPosition = Vec2((float)r->left, (float)r->top);
         break;
     }
